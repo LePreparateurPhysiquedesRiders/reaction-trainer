@@ -1,52 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Flashing Colors</title>
+  <meta charset="UTF-8" />
+  <title>Réactivité Visuelle</title>
   <style>
-    body {
+    html, body {
+      height: 100%;
       margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: Arial, sans-serif;
-      font-size: 24px;
-      color: white;
-      text-align: center;
-    }
-    .hidden {
-      display: none;
+      transition: background-color 0.5s ease;
     }
   </style>
 </head>
 <body>
-  <div id="text">Flashing Colors!</div>
-  <div id="indicator" style="position: absolute; bottom: 20px; font-size: 18px;">Current Color: None</div>
-
   <script>
-    const body = document.body;
-    const text = document.getElementById("text");
-    const indicator = document.getElementById("indicator");
-    const colors = ["green", "red"];
-    let lastColor = "";
+    const couleurs = ["#ff0000", "#00ff00", "#0000ff", "#ffff00", "#ff00ff", "#00ffff"];
+    let derniereCouleur = "";
 
-    function flashColors() {
-      const randomIndex = Math.floor(Math.random() * colors.length);
-      const newColor = colors[randomIndex];
-      body.style.backgroundColor = newColor;
-
-      if (newColor === lastColor) {
-        indicator.textContent = `Current Color: ${newColor} (unchanged)`;
-      } else {
-        indicator.textContent = `Current Color: ${newColor}`;
-      }
-
-      lastColor = newColor;
+    function couleurAleatoireDifferente() {
+      let nouvelle;
+      do {
+        nouvelle = couleurs[Math.floor(Math.random() * couleurs.length)];
+      } while (nouvelle === derniereCouleur);
+      derniereCouleur = nouvelle;
+      return nouvelle;
     }
 
-    setInterval(flashColors, Math.random() * 10000 + 4000); // Random interval between 4000ms and 10000ms
+    function changerCouleur() {
+      document.body.style.backgroundColor = couleurAleatoireDifferente();
+      const prochainIntervalle = Math.random() * (9000 - 4000) + 4000; // entre 4 et 9 sec
+      setTimeout(changerCouleur, prochainIntervalle);
+    }
+
+    changerCouleur();
   </script>
 </body>
 </html>
