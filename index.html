@@ -13,22 +13,19 @@
 </head>
 <body>
   <script>
-    const couleurs = ["#ff0000", "#00ff00", "#0000ff", "#ffff00", "#ff00ff", "#00ffff"];
+    const couleurs = ["#ff0000", "#00ff00"]; // rouge et vert
     let derniereCouleur = "";
 
-    function couleurAleatoireDifferente() {
-      let nouvelle;
-      do {
-        nouvelle = couleurs[Math.floor(Math.random() * couleurs.length)];
-      } while (nouvelle === derniereCouleur);
-      derniereCouleur = nouvelle;
-      return nouvelle;
+    function couleurAlternée() {
+      // alterne entre rouge et vert
+      derniereCouleur = (derniereCouleur === couleurs[0]) ? couleurs[1] : couleurs[0];
+      return derniereCouleur;
     }
 
     function changerCouleur() {
-      document.body.style.backgroundColor = couleurAleatoireDifferente();
-      const prochainIntervalle = Math.random() * (9000 - 4000) + 4000; // entre 4 et 9 sec
-      setTimeout(changerCouleur, prochainIntervalle);
+      document.body.style.backgroundColor = couleurAlternée();
+      const delai = Math.random() * (7000 - 3000) + 3000; // entre 3 et 7 sec
+      setTimeout(changerCouleur, delai);
     }
 
     changerCouleur();
